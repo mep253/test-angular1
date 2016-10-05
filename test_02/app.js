@@ -4,7 +4,7 @@
 angular.module('myApp', [])
 .controller('toBuyListController', toBuyListController)
 .controller('boughtListController', boughtListController)
-.service('ShoppingListService', ShoppingListService);;
+.service('ShoppingListService', ShoppingListService);
 
 toBuyListController.$inject = ['$scope','ShoppingListService'];
 function toBuyListController($scope, ShoppingListService) {
