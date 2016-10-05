@@ -64,7 +64,7 @@ function MenuSearchService($http) {
                     if(desc.indexOf(searchTerm) !== -1) 
                         filtered.push(foundItems.menu_items[i]);
                 };
-
+            //console.log(filtered);
             console.log(filtered.length);
             return filtered; 
 
