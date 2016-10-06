@@ -9,6 +9,7 @@ NarrowItDownController.$inject = ['MenuSearchService'];
 function NarrowItDownController(MenuSearchService) {
     var menu = this;
     var ss = menu.searchTerm;
+    var found;
 
     menu.searchMenu = function(searchTerm) {
 
@@ -16,7 +17,7 @@ function NarrowItDownController(MenuSearchService) {
 
         promise.then(function (response) {
             menu.found = response.data;
-            console.log('menu.found',menu.found);
+            console.log('menu.found: ', menu.found);
         })
         .catch(function (error) {
             console.log("Something went terribly wrong.");
@@ -51,25 +52,23 @@ function MenuSearchService($http) {
     //retrieve the list of all the menu items.
 
     service.getMatchedMenuItems = function(searchTerm) {
+        var foundItems = [];
+        var filtered = [];
        return $http({
             method: "GET",
             url: ("https://davids-restaurant.herokuapp.com/menu_items.json")
         }).then(function (result) {
-            var foundItems = result.data;
-            var filtered = [];
-         //console.log(foundItems.menu_items.length);
+            foundItems = result.data;
+             //console.log(foundItems.menu_items.length);
          
             for (var i = 0; i < foundItems.menu_items.length; i++) {
                     var desc = foundItems.menu_items[i].description;
                     if(desc.indexOf(searchTerm) !== -1) 
                         filtered.push(foundItems.menu_items[i]);
                 };
-            //console.log(filtered);
-            console.log(filtered.length);
-            return filtered; 
-
-        }).catch(function (error) {
-               console.log('error');
+            console.log('filtered is: ', filtered);
+            console.log('filtered.length: ', filtered.length);
+            return filtered;
         });
 
 
