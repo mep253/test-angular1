@@ -11,7 +11,8 @@ function FoundItems() {
   var ddo = {
     templateUrl: 'foundItems.html',
     scope: {
-      menu: '=foundList'
+      menu: '=foundList',
+      removeItem: '&'
     }
   };
 

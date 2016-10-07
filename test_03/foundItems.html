@@ -2,6 +2,6 @@
       <li ng-repeat="item in menu.found">
         <b>{{ item.name }}</b> ({{ item.short_name }})<br>
         {{ item.description }}
-        <button class="btn btn-default btn-sm" ng-click="menu.removeItem($index);">Don't want this one!</button>
+        <button class="btn btn-default btn-sm" ng-click="menu.removeItem({index: $index});">Don't want this one!</button>
       </li>
     </ul>
