@@ -22,15 +22,11 @@
 
     <!-- Bonus loader (see Bonus section of the assignment) -->
     <items-loader-indicator></items-loader-indicator>
-
+    <div class="error" ng-if="menu.error">Nothing found for "{{menu.searchTerm}}"!</div>
     <!-- found-items should be implemented as a component -->
-    <found-items found-items="...." on-remove="...."></found-items>
-      <ul>
-        <li ng-repeat="item in menu.found">
-          {{ item.name }}
-          {{ item.description }}
-        </li>
-      </ul>
+    <!-- <found-items found-items="...." on-remove="...."></found-items> -->
+
+<found-items></found-items>
 
   </div>
 

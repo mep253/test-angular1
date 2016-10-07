@@ -3,25 +3,53 @@
 
 angular.module('NarrowItDownApp', [])
 .controller('NarrowItDownController', NarrowItDownController)
-.service('MenuSearchService', MenuSearchService);
+.service('MenuSearchService', MenuSearchService)
+.directive('foundItems', FoundItems);
+
+
+function FoundItems() {
+  var ddo = {
+    templateUrl: 'foundItems.html',
+    // scope: {
+    //   menu: '=foundItems',
+    //   title: '@title'
+    // }
+  };
+
+  return ddo;
+};
 
 NarrowItDownController.$inject = ['MenuSearchService'];
 function NarrowItDownController(MenuSearchService) {
     var menu = this;
-    var ss = menu.searchTerm;
-    var found;
+    
 
     menu.searchMenu = function(searchTerm) {
-
-        var promise = MenuSearchService.getMatchedMenuItems(searchTerm);
+        var promise = MenuSearchService.getMatchedMenuItems(menu.searchTerm);
 
         promise.then(function (response) {
-            menu.found = response.data;
+            menu.found = response;
+            if(!menu.found.length || !searchTerm){
+                menu.error = true;
+            } else {
+                menu.error = false;
+            }
             console.log('menu.found: ', menu.found);
+            console.log('response: ', response);
+            console.log('response.data: ', response.data);
+            
         })
         .catch(function (error) {
             console.log("Something went terribly wrong.");
         });
+
+    menu.removeItem = function (itemIndex) {
+    // shoppingList.removeItem(itemIndex);
+    // menu.title = origTitle + " (" + menu.items.length + " items )";
+    menu.found.splice(itemIndex, 1);
+  };
+    
+
     }
 
 
@@ -54,6 +82,7 @@ function MenuSearchService($http) {
     service.getMatchedMenuItems = function(searchTerm) {
         var foundItems = [];
         var filtered = [];
+
        return $http({
             method: "GET",
             url: ("https://davids-restaurant.herokuapp.com/menu_items.json")
@@ -70,8 +99,6 @@ function MenuSearchService($http) {
             console.log('filtered.length: ', filtered.length);
             return filtered;
         });
-
-
     };
 
 
