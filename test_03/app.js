@@ -10,10 +10,10 @@ angular.module('NarrowItDownApp', [])
 function FoundItems() {
   var ddo = {
     templateUrl: 'foundItems.html',
-    // scope: {
-    //   menu: '=foundItems',
-    //   title: '@title'
-    // }
+    scope: {
+      menu: '=foundList',
+      // title: '@title'
+    }
   };
 
   return ddo;
