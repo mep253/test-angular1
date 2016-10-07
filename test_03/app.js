@@ -11,8 +11,7 @@ function FoundItems() {
   var ddo = {
     templateUrl: 'foundItems.html',
     scope: {
-      menu: '=foundList',
-      // title: '@title'
+      menu: '=foundList'
     }
   };
 
@@ -25,7 +24,7 @@ function NarrowItDownController(MenuSearchService) {
     
 
     menu.searchMenu = function(searchTerm) {
-        var promise = MenuSearchService.getMatchedMenuItems(menu.searchTerm);
+        var promise = MenuSearchService.getMatchedMenuItems((menu.searchTerm).toLowerCase());
 
         promise.then(function (response) {
             menu.found = response;
@@ -34,50 +33,23 @@ function NarrowItDownController(MenuSearchService) {
             } else {
                 menu.error = false;
             }
-            console.log('menu.found: ', menu.found);
-            console.log('response: ', response);
-            console.log('response.data: ', response.data);
+            // console.log('menu.found: ', menu.found);
+            // console.log('response: ', response);
+            // console.log('response.data: ', response.data);
             
         })
         .catch(function (error) {
             console.log("Something went terribly wrong.");
         });
-
-    menu.removeItem = function (itemIndex) {
-    // shoppingList.removeItem(itemIndex);
-    // menu.title = origTitle + " (" + menu.items.length + " items )";
-    menu.found.splice(itemIndex, 1);
-  };
-    
-
     }
-
-
-    // menu.logMenuItems = function (searchTerm) {
-    //     var promise = MenuSearchService.getMenuForCategory(shortName);
-
-    //     promise.then(function (response) {
-    //       console.log(response.data);
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     })
-    // };
+    menu.removeItem = function (itemIndex) {
+        menu.found.splice(itemIndex, 1);
+    };
 
 }
 MenuSearchService.$inject = ['$http'];
 function MenuSearchService($http) {
     var service = this;
-
-    // method: getMatchedMenuItems(searchTerm).  
-    // Once it gets all the menu items, 
-    // it should loop through them to pick out the ones whose description matches the searchTerm. 
-    // Once a list of found items is compiled, it should return that list (wrapped in a promise).
-    //  Remember that the then function itself returns a promise. 
-    // https://davids-restaurant.herokuapp.com/menu_items.json
-
-    //reaching out to the server
-    //retrieve the list of all the menu items.
 
     service.getMatchedMenuItems = function(searchTerm) {
         var foundItems = [];
@@ -95,14 +67,11 @@ function MenuSearchService($http) {
                     if(desc.indexOf(searchTerm) !== -1) 
                         filtered.push(foundItems.menu_items[i]);
                 };
-            console.log('filtered is: ', filtered);
-            console.log('filtered.length: ', filtered.length);
+            // console.log('filtered is: ', filtered);
+            // console.log('filtered.length: ', filtered.length);
             return filtered;
         });
     };
-
-
-
-    }
+}
 
 })();
